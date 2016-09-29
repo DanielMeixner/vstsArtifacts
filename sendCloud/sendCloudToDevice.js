@@ -3,7 +3,7 @@
 var Client = require('azure-iothub').Client;
 var Message = require('azure-iot-common').Message;
 var connectionString = 'HostName=DmxIoTHub.azure-devices.net;SharedAccessKeyName=tmppol;SharedAccessKey=6x5MgzExXlQKNx+inTSBHq3aK1QC8+O7R3Zt37JYlOM=';
-var targetDevice = 'mydevice1';
+var targetDevice = 'Device11-7ce4a850';
 
 var serviceClient = Client.fromConnectionString(connectionString);
 

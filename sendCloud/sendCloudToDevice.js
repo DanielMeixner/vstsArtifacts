@@ -1,9 +1,12 @@
+
+
 'use strict';
 
 var Client = require('azure-iothub').Client;
 var Message = require('azure-iot-common').Message;
-var connectionString = 'HostName=DmxIoTHub.azure-devices.net;SharedAccessKeyName=tmppol;SharedAccessKey=6x5MgzExXlQKNx+inTSBHq3aK1QC8+O7R3Zt37JYlOM=';
-var targetDevice = 'Device11-7ce4a850';
+
+var connectionString = 'HostName=DmxIoTHub.azure-devices.net;SharedAccessKeyName=tmppol;SharedAccessKey=k9KXs19ShC5ByxvDl16HhtbiUj4bSap1ZhF1rfQJCTU=';
+var targetDevice = 'Device61-7ce4a850';
 
 var serviceClient = Client.fromConnectionString(connectionString);
 
@@ -32,5 +35,6 @@ serviceClient.open(function (err) {
     message.messageId = "My Message ID";
     console.log('Sending message: ' + message.getData());
     serviceClient.send(targetDevice, message, printResultFor('send'));
+    serviceClient.log("done");
   }
-});
+})

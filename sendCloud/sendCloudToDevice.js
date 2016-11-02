@@ -35,6 +35,6 @@ serviceClient.open(function (err) {
     message.messageId = "My Message ID";
     console.log('Sending message: ' + message.getData());
     serviceClient.send(targetDevice, message, printResultFor('send'));
-    serviceClient.log("done");
+    // serviceClient.log("done");
   }
 })

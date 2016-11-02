@@ -14,14 +14,17 @@ function printResultFor(op) {
   return function printResult(err, res) {
     if (err) console.log(op + ' error: ' + err.toString());
     if (res) console.log(op + ' status: ' + res.constructor.name);
+    process.exit();
   };
 }
 
 function receiveFeedback(err, receiver){
-  receiver.on('message', function (msg) {
-    console.log('Feedback message:')
-    console.log(msg.getData().toString('utf-8'));
-  });
+  process.exit();
+  // receiver.on('message', function (msg) {
+  //   console.log('Feedback message:')
+  //   // console.log(msg.getData().toString('utf-8'));
+  //   //process.exit();
+  // });
 }
 
 serviceClient.open(function (err) {
@@ -29,12 +32,14 @@ serviceClient.open(function (err) {
     console.error('Could not connect: ' + err.message);
   } else {
     console.log('Service client connected');
-    serviceClient.getFeedbackReceiver(receiveFeedback);
-    var message = new Message('Cloud to device message.');
+ //   serviceClient.getFeedbackReceiver(receiveFeedback);
+    var message = new Message('Cloud to device message. From VSO.');
     message.ack = 'full';
-    message.messageId = "My Message ID";
+    message.messageId = "My Message ID2223";
     console.log('Sending message: ' + message.getData());
     serviceClient.send(targetDevice, message, printResultFor('send'));
-    // serviceClient.log("done");
+    console.log("done");
+
+    
   }
 })

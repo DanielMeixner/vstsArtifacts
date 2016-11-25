@@ -8,9 +8,13 @@ var connectionString = process.argv[2];
 var iothuburl = process.argv[3];
 var auth = process.argv[4];
 
+console.log ("connectionString:" + connectionString);
+console.log ("iothuburl:" + iothuburl);
+console.log ("auth:" + auth);
+
 var headers = {
              'Content-Type':'application/json',
-             'Authorization':auth
+             'Authorization': auth
 }
 
 var options = {
@@ -22,8 +26,10 @@ var options = {
 
 var deviceList;
 req(options, function(error, response, body) {
- deviceList = JSON.parse(body); 
+  console.log(body);
+deviceList = JSON.parse(body); 
 });
+
 
 var SendNotification = function(devId)
 {
@@ -36,17 +42,8 @@ function printResultFor(op) {
   return function printResult(err, res) {
     if (err) console.log(op + ' error: ' + err.toString());
     if (res) console.log(op + ' status: ' + res.constructor.name);
-    process.exit();
+   
   };
-}
-
-function receiveFeedback(err, receiver){
-  process.exit();
-  // receiver.on('message', function (msg) {
-  //   console.log('Feedback message:')
-  //   // console.log(msg.getData().toString('utf-8'));
-  //   //process.exit();
-  // });
 }
 
 serviceClient.open(function (err) {
@@ -60,13 +57,13 @@ serviceClient.open(function (err) {
     message.messageId = "My Message ID2223";
     console.log('Sending message: ' + message.getData());
     deviceList.forEach(function(element) {
-        serviceClient.send(element, message, printResultFor('send'));
+      var id = element.deviceId;
+      serviceClient.send(id, message, printResultFor('send'));
+      console.log("Sent message to ... " + id);
         
-    }, this);
-    
+    }, this);    
 
-    console.log("done");
-
-    
+    console.log("done");    
+     process.exit();
   }
 })

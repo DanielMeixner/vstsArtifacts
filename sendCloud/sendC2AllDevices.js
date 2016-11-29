@@ -51,24 +51,37 @@ function printResultFor(op) {
   };
 }
 
+function receiveFeedback(err, receiver){
+   receiver.on('message', function (msg) {
+     console.log('Feedback message:')
+     console.log(msg.getData().toString('utf-8'));
+     process.exit();
+   });
+ }
+
+var targetDevice = 'myDeviceId';
+
+
 serviceClient.open(function (err) {
   if (err) {
     console.error('Could not connect: ' + err.message);
   } else {
     console.log('Service client connected');
- 
+  serviceClient.getFeedbackReceiver(receiveFeedback);
+
     var message = new Message('Cloud to device message. From VSO.');
     message.ack = 'full';
-    message.messageId = "My Message ID2223";
+    message.messageId = "My Message to all devices";
     console.log('Sending message: ' + message.getData());
     deviceList.forEach(function(element) {
       var id = element.deviceId;
-      serviceClient.send(id, message, printResultFor('send'));
+      
+      serviceClient.send('myDeviceId', message, printResultFor('send'));
       console.log("Sent message to ... " + id);
         
     }, this);    
 
     console.log("done");    
-     process.exit();
+    // Do NOT call this:  process.exit();
   }
 })

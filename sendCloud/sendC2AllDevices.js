@@ -55,7 +55,7 @@ function receiveFeedback(err, receiver){
    receiver.on('message', function (msg) {
      console.log('Feedback message:')
      console.log(msg.getData().toString('utf-8'));
-     process.exit();
+    //  process.exit();
    });
  }
 

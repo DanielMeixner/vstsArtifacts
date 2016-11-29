@@ -6,11 +6,16 @@ var req = require("request");
  
 var connectionString = process.argv[2];
 var iothuburl = process.argv[3];
-var auth = process.argv[4];
+var authb64 = process.argv[4];
+
+
+var buf = Buffer.from(authb64,'base64');
+var auth = buf.toString('utf8');
 
 console.log ("connectionString:" + connectionString);
 console.log ("iothuburl:" + iothuburl);
-console.log ("auth:" + auth);
+console.log ("decrypted Auth: " +auth);
+
 
 var headers = {
              'Content-Type':'application/json',

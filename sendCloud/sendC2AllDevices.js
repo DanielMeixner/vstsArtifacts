@@ -75,8 +75,8 @@ serviceClient.open(function (err) {
     console.log('Sending message: ' + message.getData());
     deviceList.forEach(function(element) {
       var id = element.deviceId;
-      
-      serviceClient.send(id, message, printResultFor('send'));
+      console.log("Sending message to ... " + id);
+      serviceClient.send(id+"", message, printResultFor('send'));
       console.log("Sent message to ... " + id);
         
     }, this);    
